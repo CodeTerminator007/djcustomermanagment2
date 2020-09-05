@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser , BaseUserManager , PermissionsMixin
 from django.utils import timezone
 
-ADMIN = 1
-CUSTOMER = 2
+ADMIN = "ADMIN"
+CUSTOMER = "CUSTOMER"
 USER_TYPE_CHOICES = (
     ('ADMIN' , 'Admin'),
     ('CUSTOMER' , 'Customer'),    
@@ -20,8 +20,8 @@ class UserManager(BaseUserManager):
     def create_customer_user(self,email , password=None ,**kwargs):
         email = self.normalize_email(email)
         user = self.model(email=email, **kwargs)
-        user.user_type == CUSTOMER   
         user.set_password(password)
+        user.user_type = CUSTOMER  
         user.save(using=self._db)
         return user
 
@@ -67,3 +67,4 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     def get_short_name(self):
         return self.email
+        
