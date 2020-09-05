@@ -1,11 +1,9 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from Authentication.models import User
 class Customer(models.Model):
-    user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE,unique=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50,null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 
     class Meta:

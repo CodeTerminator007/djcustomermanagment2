@@ -17,10 +17,11 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_customer(self,**kwargs):
-        user = self.create_user(**kwargs)
-        user.is_superuser =  False
-        user.is_staff = False
+    def create_customer_user(self,email , password=None ,**kwargs):
+        email = self.normalize_email(email)
+        user = self.model(email=email, **kwargs)
+        user.user_type == CUSTOMER   
+        user.set_password(password)
         user.save(using=self._db)
         return user
 
