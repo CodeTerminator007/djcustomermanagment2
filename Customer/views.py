@@ -11,7 +11,9 @@ def register(request):
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request,'home.html')
+            sucess = "User has Been Created"
+            context = {'sucess':sucess}
+            return render(request,'home.html',context)
         else:
             return HttpResponse("Error in in Form is  Not Valid")
     form = CustomerRegistrationForm()
