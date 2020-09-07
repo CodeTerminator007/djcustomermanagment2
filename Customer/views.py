@@ -73,14 +73,14 @@ def delete_order(request ,pk):
     context = {'item':item}
     return render(request,'delete.html' ,context )    
 
-def settings_user(request):
-    customer = request.user.customer
+def settings_user(request ,pk):
+    customer =  Customer.objects.get(id=pk)
     form =  CustomerForm(instance=customer)
     if request.method == 'POST':
         form = CustomerForm(request.POST,request.FILES,instance=customer)
         if form.is_valid():
             form.save()    
             
-    context = {'form' : form }
+    context = {'form' : form ,"customer":customer}
 
     return render(request , 'settings_update.html' , context)

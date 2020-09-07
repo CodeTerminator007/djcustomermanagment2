@@ -3,7 +3,8 @@ from django.urls import path ,include
 from Authentication.views import *
 from Customer.views import customer_register , customer_products_view
 from seller.views import seller_register
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('' , signin , name="signin"),
     path('customer_registeration/',customer_register ,name="customer_register"),
@@ -14,3 +15,5 @@ urlpatterns = [
     path('customer/',include('Customer.urls')),
     path('admin/', admin.site.urls),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
