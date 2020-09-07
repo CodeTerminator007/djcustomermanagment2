@@ -26,7 +26,7 @@ def customer_register(request):
             form.save()
             email = form.cleaned_data['email']
             customer =  Customer.objects.get(user__email=email)
-            return redirect('customer-home' ,customer.id )
+            return redirect('signin' )
         else:
             return HttpResponse("Error in Form is  Not Valid")
     form = CustomerRegistrationForm()
