@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser , BaseUserManager , PermissionsMixin
 from django.utils import timezone
 
-ADMIN = "ADMIN"
+SELLER = "SELLER"
 CUSTOMER = "CUSTOMER"
 USER_TYPE_CHOICES = (
-    ('ADMIN' , 'Admin'),
+    ('SELLER' , 'Seller'),
     ('CUSTOMER' , 'Customer'),    
 )
 class UserManager(BaseUserManager):
@@ -24,6 +24,13 @@ class UserManager(BaseUserManager):
         user.user_type = CUSTOMER  
         user.save(using=self._db)
         return user
+    def create_seller_user(self,email , password=None ,**kwargs):
+        email = self.normalize_email(email)
+        user = self.model(email=email, **kwargs)
+        user.set_password(password)
+        user.user_type = SELLER  
+        user.save(using=self._db)
+        return user        
 
     def create_superuser(self, **kwargs):
         user = self.create_user(**kwargs)
