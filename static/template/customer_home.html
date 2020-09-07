@@ -5,15 +5,20 @@
 <div class="row mb-2">
     <div class="col-md">
         <div class="card card-body">
-            <h5 class="card-title">Customer:</h5>           
+            <h5 class="card-title">Customer:</h5>       
+
+            <img width="150" height="150" class="mx-auto d-block img-thumbnail rounded-circle" src="{{request.user.customer.profile_pic.url}}" alt="">
+ 
+
             <hr>
-            <a class="btn btn-outline-info btn-sm btn-block" href="">Update Customer</a>
-            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'place_order' request.user.customer.id %}">Place an Order </a>
+
+            <a class="btn btn-outline-danger btn-sm btn-block" href="{% url 'settings_user' request.user.customer.id %}">Settings</a>
+            <a class="btn btn-outline-danger btn-sm btn-block" href="{% url 'place_order' request.user.customer.id %}">Place an Order </a>
         </div>
     </div>
     <div class="col-md">
         <div class="card card-body">
-            <h5>Contact Information:</h5>
+            <h5>Contact Information:</h5>            
             <hr>
             <p class=""><b>Email:</b>  {{customer.user.email}}</p>
             <p><b>Name: </b> {{customer.first_name}} {{customer.last_name}}</p>
@@ -44,7 +49,7 @@
     <div class="col-md">
         <div class="card card-body">
             <form method="get">
-                <button class="btn btn-primary" type="submit"> Search</button>
+                <button class="btn btn-danger" type="submit"> Search</button>
             </form>
         </div>
     </div>

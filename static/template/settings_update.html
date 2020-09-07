@@ -1,12 +1,13 @@
-{% extends 'accounts/main.html' %}
+{% extends 'main.html' %}
+{% load widget_tweaks %}
 
-{% block contents %}
+{% block content %}
 <div class="row">
     <div class="col-md-4 ">
         <div class="card">
             <div class="card-body">
 
-            <a href="{% url 'user-page' %}" class="btn btn-block btn-warning">Back to Profile</a>
+            <a href="{% url 'customer-home' request.user.customer.id %}" class="btn btn-block btn-warning">Back to Profile</a>
             <hr>
             <h4 class="card-title text-center mt-3"> Account Setting</h4>
             <hr>
@@ -19,12 +20,32 @@
     </div>
     <div class="col-md">
         <form class="form" method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="card">
                 <div class="card-body">
                     <br>
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <button class="btn btn-sm btn-info" type="submit" name="submit"> Submit</button>
+                    <div class="form-group">
+                        <label class="form-label">Customer Email</label>
+                        <input type="text" readonly class="form-control" id="staticEmail" value={{customer.user}} >
+                        <small>Email cannot be changed</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        {% render_field form.first_name  class="form-control" placeholder="First Name .."  %}
+            
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        {% render_field form.last_name  class="form-control" placeholder="Last Name .."  %}
+                    
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label font-weight-bold">Profile Pic</label>
+                        
+                        {% render_field form.profile_pic  class="" type="file"   %}
+                    
+                    </div>                                        
+                    <button class="btn btn-block btn-info" type="submit" name="submit"> Submit</button>
 
                 </div>
             </div>
