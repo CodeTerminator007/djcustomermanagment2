@@ -72,7 +72,7 @@
                         <td>
                             <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'updae_order' i.id %}">Update </a>
                         </td>
-                        <td><a class="btn btn-outline-danger btn-sm btn-block" href="">Remove</a></td>
+                        <td><a class="btn btn-outline-danger btn-sm btn-block" href="{% url 'delete_order' i.id %}">Remove</a></td>
 
                     </tr>
                     {% endfor %}                    

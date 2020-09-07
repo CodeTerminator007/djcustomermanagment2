@@ -50,7 +50,7 @@ def place_order(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)
 
-def updae_order(request ,pk):
+def update_order(request ,pk):
 
     order = Order.objects.get(id=pk)
     form = OrderForm(instance=order)
@@ -62,3 +62,13 @@ def updae_order(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)    
 
+
+
+def delete_order(request ,pk):
+    customer =  Customer.objects.get(id=pk)
+    item = Order.objects.get(id=pk)
+    if request.method == "POST":
+        item.delete()
+        return redirect('customer-home' ,customer.id )
+    context = {'item':item}
+    return render(request,'delete.html' ,context )    
