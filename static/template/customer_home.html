@@ -8,7 +8,7 @@
             <h5 class="card-title">Customer:</h5>           
             <hr>
             <a class="btn btn-outline-info btn-sm btn-block" href="">Update Customer</a>
-            <a class="btn btn-outline-info btn-sm btn-block" href="">Place an Order </a>
+            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'place_order' request.user.customer.id %}">Place an Order </a>
         </div>
     </div>
     <div class="col-md">
@@ -16,7 +16,7 @@
             <h5>Contact Information:</h5>
             <hr>
             <p class=""><b>Email:</b>  {{customer.user.email}}</p>
-            <p><b>Phone: </b> {{customer.phone}}</p>
+            <p><b>Name: </b> {{customer.first_name}} {{customer.last_name}}</p>
 
         </div>
     </div>
@@ -27,7 +27,7 @@
             <h1 class="text-center card-title">
                 
                 {% if orders %}
-                {{counter}}
+                {{total_order}}
                 {% endif %}
 
                 
@@ -55,7 +55,7 @@
             <table class="table">
                 <tr>
                     <th>Product</th>
-                    <th>Catagory</th>
+                    <th>Seller</th>
                     <th>Date Ordered</th>
                     <th>Status</th>
                     <th>Update</th>
@@ -66,13 +66,13 @@
                     {% for i in orders %}
                     <tr>
                         <td>{{i.product}}</td>
-                        <td>{{i.product.Catagory}}</td>
+                        <td>{{i.product.seller.name}}</td>
                         <td>{{i.date_created}}</td>
                         <td>{{i.status}}</td>
                         <td>
-                            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'update_order' i.product.id %}">Update </a>
+                            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'updae_order' i.id %}">Update </a>
                         </td>
-                        <td><a class="btn btn-outline-danger btn-sm btn-block" href="{% url 'delete_order' i.id %}">Remove</a></td>
+                        <td><a class="btn btn-outline-danger btn-sm btn-block" href="">Remove</a></td>
 
                     </tr>
                     {% endfor %}                    

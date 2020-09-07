@@ -2,6 +2,7 @@ from django.shortcuts import render ,redirect
 from django.contrib.auth import authenticate , login , logout
 from .models import *
 from Customer.models import Customer
+from seller.models import Seller
 
 def signin(request):
     if request.method == "POST":
@@ -9,19 +10,15 @@ def signin(request):
         password = request.POST.get('password')
 
         user = authenticate(username=email, password=password)
-        print(email)
-        print(password)
-        print(user)
-
         
         if user is not None :            
             login(request,user)
             if user.user_type == "CUSTOMER":
                 customer =  Customer.objects.get(user__email=user.email)
-                return redirect('customer-page' , customer.id)
+                return redirect('customer-home' , customer.id)
             if user.user_type == "SELLER":
                 seller = Seller.objects.get(user__email=user.email) 
-                return redirect ('customer-page', seller.id)              
+                return redirect ('seller-home', seller.id)              
         else:
             pass
     return render(request , 'signin.html')

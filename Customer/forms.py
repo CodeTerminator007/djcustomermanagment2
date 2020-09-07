@@ -1,7 +1,6 @@
 from django import forms
 from Authentication.models import User
-from .models import Customer
-
+from .models import Customer , Order
 class CustomerRegistrationForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=100, required=True)
     first_name = forms.CharField(label="Fist Name", max_length=40, required=True)
@@ -40,6 +39,14 @@ class CustomerRegistrationForm(forms.Form):
             last_name = data['last_name'],
             )
         customer.save()
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fileds = '__all__'
+        exclude = ['created_at' , 'updated_at']
+
 
 
 

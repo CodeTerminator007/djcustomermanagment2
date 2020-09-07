@@ -4,6 +4,7 @@ from django.shortcuts import (
     
 from Authentication.models import User ,UserManager
 from .models import Seller
+from product.models import Product
 from .forms import SellerRegistrationForm
 
 
@@ -12,8 +13,10 @@ def seller_home(request,pk):
         seller =  Seller.objects.get(id=pk)
     except User.DoesNotExist:
         raise Http404("Seller Does Not Exisit")
-
-    context = {'seller':seller}
+    
+    sellerproducts = Product.objects.filter(seller=seller)
+    totalsellerproducts = sellerproducts.count()
+    context = {'seller':seller,'sellerproducts':sellerproducts,"totalsellerproducts":totalsellerproducts }
     return render(request,"seller_home.html",context)
 
 
