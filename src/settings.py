@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'product',
+    'seller',
     'widget_tweaks',
     'Customer',
     'Authentication',

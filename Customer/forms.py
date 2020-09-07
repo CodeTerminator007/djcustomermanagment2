@@ -34,7 +34,6 @@ class CustomerRegistrationForm(forms.Form):
         email =  data['email']
         password = data['password1']
         user  = User.objects.create_customer_user(email=email,password=password)
-        print(user)
         customer = Customer(
             user =user,
             first_name= data['first_name'],
