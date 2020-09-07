@@ -5,7 +5,7 @@ from django.shortcuts import (
 from Authentication.models import User ,UserManager
 from .models import Customer  ,Order
 from product.models import Product
-from .forms import CustomerRegistrationForm , OrderForm
+from .forms import CustomerRegistrationForm , OrderForm , CustomerForm  
 
 
 def customer_home(request,pk):
@@ -21,12 +21,12 @@ def customer_home(request,pk):
 
 def customer_register(request):
     if request.method == "POST":
-        form = CustomerRegistrationForm(request.POST)
+        form = CustomerRegistrationForm(request.POST , request.FILES)
         if form.is_valid():
             form.save()
             email = form.cleaned_data['email']
             customer =  Customer.objects.get(user__email=email)
-            return redirect('customer-page' ,customer.id )
+            return redirect('signin' )
         else:
             return HttpResponse("Error in Form is  Not Valid")
     form = CustomerRegistrationForm()
@@ -50,7 +50,7 @@ def place_order(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)
 
-def updae_order(request ,pk):
+def update_order(request ,pk):
 
     order = Order.objects.get(id=pk)
     form = OrderForm(instance=order)
@@ -62,3 +62,25 @@ def updae_order(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)    
 
+
+
+def delete_order(request ,pk):
+    customer =  Customer.objects.get(id=pk)
+    item = Order.objects.get(id=pk)
+    if request.method == "POST":
+        item.delete()
+        return redirect('customer-home' ,customer.id )
+    context = {'item':item}
+    return render(request,'delete.html' ,context )    
+
+def settings_user(request):
+    customer = request.user.customer
+    form =  CustomerForm(instance=customer)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST,request.FILES,instance=customer)
+        if form.is_valid():
+            form.save()    
+            
+    context = {'form' : form }
+
+    return render(request , 'settings_update.html' , context)

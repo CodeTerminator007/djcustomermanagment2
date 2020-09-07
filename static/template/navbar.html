@@ -2,11 +2,13 @@
   
   {% if request.user.user_type == "CUSTOMER"  %}
   <a class="navbar-brand text-danger font-weight-bold font-italic" href="{% url 'customer-home' request.user.customer.id %}"> Customer Managment</a>
-  {% else  %}
-  <a class="navbar-brand text-danger font-weight-bold font-italic" href="{% url 'seller-home' request.user.seller.id %}"> Customer Managment</a>
-
-
   {% endif %}
+  
+  {% if request.user.user_type == "SELLER"  %}
+  <a class="navbar-brand text-danger font-weight-bold font-italic" href="{% url 'seller-home' request.user.seller.id %}"> Customer Managment</a>
+    
+  {% endif %}
+    
       
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -16,7 +18,6 @@
         
         {% if request.user.user_type == "CUSTOMER"  %}
         <a class="nav-link" href="{% url 'customer_products' %}">Products</a>
-        <a class="nav-link" href="#">Sellers</a>        
 
         {% else %}
         <a class="nav-link" href="{% url 'customer_products' %}">Products</a>
