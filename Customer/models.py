@@ -6,6 +6,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50,null=True)
+    profile_pic = models.ImageField(null=True, default="defaultprofile.jpg" ,blank=True)
     created_at = models.DateTimeField(auto_now_add=True,max_length=200)
     updated_at = models.DateTimeField(auto_now=True,max_length=200)
     class Meta:

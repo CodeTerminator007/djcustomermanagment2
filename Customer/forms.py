@@ -5,6 +5,7 @@ class CustomerRegistrationForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=100, required=True)
     first_name = forms.CharField(label="Fist Name", max_length=40, required=True)
     last_name = forms.CharField(label="Last Name", max_length=40, required=True)
+    profile_pic = forms.ImageField(label="Upload Image")
     password1 = forms.CharField(label="Password", required=True)
     password2 = forms.CharField(label="Confirm Password", required=True)
 
@@ -37,6 +38,7 @@ class CustomerRegistrationForm(forms.Form):
             user =user,
             first_name= data['first_name'],
             last_name = data['last_name'],
+            profile_pic = data['profile_pic'],
             )
         customer.save()
 
@@ -47,8 +49,10 @@ class OrderForm(forms.ModelForm):
         fileds = '__all__'
         exclude = ['created_at' , 'updated_at']
 
-
-
-
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+        exclude = ['created_at' , 'updated_at']
         
 
