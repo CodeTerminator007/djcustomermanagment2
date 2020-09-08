@@ -7,11 +7,11 @@
         <div class="card">
             <div class="card-body">
 
-            <a href="{% url 'customer-home' request.user.customer.id %}" class="btn btn-block btn-warning">Back to Profile</a>
+            <a href="{% url 'seller-home' request.user.seller.id %}" class="btn btn-block btn-warning">Back to Profile</a>
             <hr>
             <h4 class="card-title text-center mt-3"> Account Setting</h4>
             <hr>
-            <img class="img-thumbnail rounded-circle" src="{{request.user.customer.profile_pic.url}}" alt="">
+            <img class="img-thumbnail rounded-circle" src="{{request.user.seller.profile_pic.url}}" alt="">
 
             </div>
 
@@ -24,28 +24,32 @@
             <div class="card">
                 <div class="card-body">
                     <br>
-                                        <div class="form-group">
-                        <label class="form-label">Customer Email</label>
-                        <input type="text" readonly class="form-control" id="staticEmail" value={{customer.user}} >
+                    <div class="form-group">
+                        <label class="form-label">Seller Email</label>
+                        <input type="text" readonly class="form-control" id="staticEmail" value={{seller.user}} >
                         <small>Email cannot be changed</small>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">First Name</label>
-                        {% render_field form.first_name  class="form-control" placeholder="First Name .."  %}
+                        <label class="form-label">Name</label>
+                        {% render_field form.name  class="form-control" placeholder="First Name .."  %}
             
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Last Name</label>
-                        {% render_field form.last_name  class="form-control" placeholder="Last Name .."  %}
+                        <label class="form-label">Phone</label>
+                        {% render_field form.phone  class="form-control" placeholder="Last Name .."  %}
                     
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        {% render_field form.address  class="form-control" placeholder="Last Name .."  %}
+                    
+                    </div>                    
                     <div class="form-group">
                         <label class="form-label font-weight-bold">Profile Pic</label>
                         
                         {% render_field form.profile_pic  class="" type="file"   %}
                     
-                    </div>
-                                                 
+                    </div>                    
                     <button class="btn btn-block btn-info" type="submit" name="submit"> Submit</button>
 
                 </div>

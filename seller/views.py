@@ -5,7 +5,7 @@ from django.shortcuts import (
 from Authentication.models import User ,UserManager
 from .models import Seller
 from product.models import Product
-from .forms import SellerRegistrationForm
+from .forms import SellerRegistrationForm , SellerForm , ProductForm
 
 
 def seller_home(request,pk):
@@ -19,17 +19,42 @@ def seller_home(request,pk):
     context = {'seller':seller,'sellerproducts':sellerproducts,"totalsellerproducts":totalsellerproducts }
     return render(request,"seller_home.html",context)
 
-
+ 
 def seller_register(request):
     if request.method == "POST":
-        form = SellerRegistrationForm(request.POST)
+        form = SellerRegistrationForm(request.POST , request.FILES)
         if form.is_valid():
             form.save()
             email = form.cleaned_data['email']
             seller =  Seller.objects.get(user__email=email)
-            return redirect('seller-home',seller.id)
-        else:
-            return HttpResponse("Error in in Form is  Not Valid")
+            return redirect('signin')
+    
     form = SellerRegistrationForm()
     context = {'form':form}
     return render(request,'seller_register.html' ,context )
+    
+def settings_seller(request ,pk):
+    seller =  Seller.objects.get(id=pk)
+    form =  SellerForm(instance=seller)
+    if request.method == 'POST':
+        form = SellerForm(request.POST,request.FILES,instance=seller)
+        if form.is_valid():
+            form.save()    
+            
+    context = {'form' : form ,"seller":seller}
+    
+
+    return render(request , 'settings_update_seller.html' , context)
+
+
+def place_product(request ,pk):
+    seller =  Seller.objects.get(id=pk)
+    form = ProductForm(initial={'seller':seller})
+    if request.method =="POST":
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('seller-home' , pk=pk)
+    context = {'form' :  form ,}
+    return render(request,'place_Product.html' , context)
+
