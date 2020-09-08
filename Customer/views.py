@@ -27,8 +27,7 @@ def customer_register(request):
             email = form.cleaned_data['email']
             customer =  Customer.objects.get(user__email=email)
             return redirect('signin' )
-        else:
-            return HttpResponse("Error in Form is  Not Valid")
+        
     form = CustomerRegistrationForm()
     context = {'form':form}
     return render(request,'customer_register.html' ,context )
@@ -61,7 +60,6 @@ def update_order(request ,pk):
             return redirect('customer-home' , pk=pk)
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)    
-
 
 
 def delete_order(request ,pk):
