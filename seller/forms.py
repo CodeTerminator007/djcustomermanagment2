@@ -1,11 +1,14 @@
 from django import forms
 from Authentication.models import User
 from .models import Seller
+from product.models import Product
 
 class SellerRegistrationForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=100, required=True)
     name = forms.CharField(label="Name here", max_length=40, required=True)
     phone = forms.CharField(label="Phone Number", max_length=40, required=True)
+    address = forms.CharField(label="Address", max_length=200)
+    profile_pic = forms.ImageField(label="Upload Image")
     password1 = forms.CharField(label="Password", required=True)
     password2 = forms.CharField(label="Confirm Password", required=True)
 
@@ -38,5 +41,21 @@ class SellerRegistrationForm(forms.Form):
             user =user,
             name = data['name'],
             phone = data['phone'],
+            address = data['address'],
+            profile_pic = data['profile_pic'],
+
             )
         seller.save()
+
+class SellerForm(forms.ModelForm):
+    class Meta:
+        model = Seller
+        fields = '__all__'
+        exclude = ['created_at' , 'updated_at']
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fileds = '__all__'
+        exclude = ['created_at' , 'updated_at']
+        

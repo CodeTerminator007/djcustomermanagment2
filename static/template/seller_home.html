@@ -6,10 +6,12 @@
 <div class="row mb-2">
     <div class="col-md">
         <div class="card card-body">
-            <h5 class="card-title">Seller:</h5>           
+            <h5 class="card-title">Seller:</h5> 
+            <img width="150" height="150" class="mx-auto d-block img-thumbnail rounded-circle" src="{{request.user.seller.profile_pic.url}}" alt="">
+
             <hr>
-            <a class="btn btn-outline-info btn-sm btn-block" href="">Update Seller</a>
-            <a class="btn btn-outline-info btn-sm btn-block" href="">Place an Product </a>
+            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'settings_seller' request.user.seller.id %}">Settings</a>
+            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'place_product' request.user.seller.id %}">Place an Product </a>
         </div>
     </div>
     <div class="col-md">
@@ -18,6 +20,8 @@
             <hr>
             <p class=""><b>Email:</b>  {{seller.user.email}}</p>
             <p><b>Phone: </b> {{seller.phone}}</p>
+            <p><b>Address: </b> {{seller.address}}</p>
+
 
         </div>
     </div>
