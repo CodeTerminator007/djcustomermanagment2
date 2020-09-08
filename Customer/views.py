@@ -4,10 +4,17 @@ from django.shortcuts import (
     
 from Authentication.models import User ,UserManager
 from .models import Customer  ,Order
+from django.contrib.auth.decorators import user_passes_test ,login_required 
 from product.models import Product
 from .forms import CustomerRegistrationForm , OrderForm , CustomerForm  
 
 
+def is_user_customer(user):
+    if user.user_type=="CUSTOMER" and user.is_active :
+        return True
+
+@login_required(login_url="signin")
+@user_passes_test(is_user_customer , login_url='signin')
 def customer_home(request,pk):
     try:
         customer =  Customer.objects.get(id=pk)
@@ -32,12 +39,16 @@ def customer_register(request):
     context = {'form':form}
     return render(request,'customer_register.html' ,context )
 
+@login_required(login_url="signin")
+@user_passes_test(is_user_customer , login_url='signin')
 def customer_products_view(request):
     products = Product.objects.all()
     context = {'products':products}
 
     return render(request,'products.html',context)
 
+@login_required(login_url="signin")
+@user_passes_test(is_user_customer , login_url='signin')
 def place_order(request ,pk):
     customer =  Customer.objects.get(id=pk)
     form = OrderForm(initial={'customer':customer})
@@ -49,6 +60,9 @@ def place_order(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)
 
+
+@login_required(login_url="signin")
+@user_passes_test(is_user_customer , login_url='signin')
 def update_order(request ,pk):
 
     order = Order.objects.get(id=pk)
@@ -61,7 +75,8 @@ def update_order(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)    
 
-
+@login_required(login_url="signin")
+@user_passes_test(is_user_customer , login_url='signin')
 def delete_order(request ,pk):
     customer =  Customer.objects.get(order__id=pk)
     item = Order.objects.get(id=pk)
@@ -71,6 +86,9 @@ def delete_order(request ,pk):
     context = {'item':item}
     return render(request,'delete.html' ,context )    
 
+
+@login_required(login_url="signin")
+@user_passes_test(is_user_customer , login_url='signin')
 def settings_user(request ,pk):
     customer =  Customer.objects.get(id=pk)
     form =  CustomerForm(instance=customer)

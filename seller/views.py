@@ -1,14 +1,19 @@
 from django.shortcuts import (
     render , HttpResponse ,
     redirect , Http404 )
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test ,login_required 
 from Authentication.models import User ,UserManager
 from .models import Seller
 from Customer.models import Order
 from product.models import Product
 from .forms import SellerRegistrationForm , SellerForm , ProductForm
 
+def is_user_seller(user):
+    if user.user_type=="SELLER" and user.is_active:
+        return True
 
+@login_required(login_url="signin")
+@user_passes_test(is_user_seller , login_url='signin')
 def seller_home(request,pk):
     try:
         seller =  Seller.objects.get(id=pk)
@@ -33,7 +38,9 @@ def seller_register(request):
     form = SellerRegistrationForm()
     context = {'form':form}
     return render(request,'seller_register.html' ,context )
-    
+
+@login_required(login_url="signin")
+@user_passes_test(is_user_seller , login_url='signin')    
 def settings_seller(request ,pk):
     seller =  Seller.objects.get(id=pk)
     form =  SellerForm(instance=seller)
@@ -47,7 +54,8 @@ def settings_seller(request ,pk):
 
     return render(request , 'settings_update_seller.html' , context)
 
-
+@login_required(login_url="signin")
+@user_passes_test(is_user_seller , login_url='signin')
 def place_product(request ,pk):
     seller =  Seller.objects.get(id=pk)
     form = ProductForm(initial={'seller':seller})
@@ -59,6 +67,8 @@ def place_product(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_Product.html' , context)
 
+@login_required(login_url="signin")
+@user_passes_test(is_user_seller , login_url='signin')
 def update_product(request ,pk):
     seller = Seller.objects.get(product__id=pk)
     product = Product.objects.get(id=pk)
@@ -71,6 +81,8 @@ def update_product(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_Product.html' , context)    
 
+@login_required(login_url="signin")
+@user_passes_test(is_user_seller , login_url='signin')
 def seller_orders_view (request, pk):
     seller = Seller.objects.get(id=pk)
     order =Order.objects.filter(product__seller__id=pk)

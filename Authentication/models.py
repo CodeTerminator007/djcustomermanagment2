@@ -74,4 +74,6 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     def get_short_name(self):
         return self.email
-        
+
+    def  get_user_type(self):
+        return self.user_type
