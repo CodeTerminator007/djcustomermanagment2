@@ -4,6 +4,7 @@ from django.shortcuts import (
     
 from Authentication.models import User ,UserManager
 from .models import Seller
+from Customer.models import Order
 from product.models import Product
 from .forms import SellerRegistrationForm , SellerForm , ProductForm
 
@@ -58,3 +59,20 @@ def place_product(request ,pk):
     context = {'form' :  form ,}
     return render(request,'place_Product.html' , context)
 
+def update_product(request ,pk):
+    seller = Seller.objects.get(product__id=pk)
+    product = Product.objects.get(id=pk)
+    form = ProductForm(instance=product)
+    if request.method =="POST":
+        form = ProductForm(request.POST , instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('seller-home' , pk=seller.id)
+    context = {'form' :  form ,}
+    return render(request,'place_Product.html' , context)    
+
+def seller_orders_view (request, pk):
+    seller = Seller.objects.get(id=pk)
+    order =Order.objects.filter(product__seller__id=pk)
+    context ={"order":order}
+    return render(request,'orders.html' , context)

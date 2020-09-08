@@ -20,7 +20,7 @@
         <a class="nav-link" href="{% url 'customer_products' %}">Products</a>
 
         {% else %}
-        <a class="nav-link" href="{% url 'customer_products' %}">Products</a>
+        <a class="nav-link" href="{% url 'seller-orders' request.user.seller.id %}">Orders</a>
 
         {% endif %}
            
