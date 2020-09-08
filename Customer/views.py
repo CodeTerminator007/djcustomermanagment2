@@ -63,7 +63,7 @@ def update_order(request ,pk):
 
 
 def delete_order(request ,pk):
-    customer =  Customer.objects.get(id=pk)
+    customer =  Customer.objects.get(order__id=pk)
     item = Order.objects.get(id=pk)
     if request.method == "POST":
         item.delete()

@@ -1,7 +1,7 @@
 from django.shortcuts import (
     render , HttpResponse ,
     redirect , Http404 )
-    
+from django.contrib.auth.decorators import user_passes_test
 from Authentication.models import User ,UserManager
 from .models import Seller
 from Customer.models import Order
