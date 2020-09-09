@@ -10,7 +10,7 @@ from .forms import CustomerRegistrationForm , OrderForm , CustomerForm
 
 
 def is_user_customer(user):
-    if user.user_type=="CUSTOMER" and user.is_active :
+    if user.user_type=="CUSTOMER"  and user.is_authenticated :
         return True
 
 @login_required(login_url="signin")
