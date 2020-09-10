@@ -10,10 +10,11 @@ from .forms import CustomerRegistrationForm , OrderForm , CustomerForm
 
 
 def is_user_customer(user):
-    if user.user_type=="CUSTOMER"  and user.is_authenticated :
-        return True
 
-@login_required(login_url="signin")
+    if user.is_authenticated :
+        if user.user_type=="CUSTOMER":
+            return user
+            
 @user_passes_test(is_user_customer , login_url='signin')
 def customer_home(request,pk):
     try:

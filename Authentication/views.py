@@ -26,3 +26,6 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('signin')
+
+def not_found(request):
+    return render(request,'404.html')
