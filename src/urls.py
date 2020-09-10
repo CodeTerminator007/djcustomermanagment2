@@ -13,6 +13,7 @@ urlpatterns = [
     path('logout/',signout, name="signout"),  
     path('seller/',include('seller.urls')),
     path('customer/',include('Customer.urls')),
+    path('404/',not_found,name='not_found'),
     path('admin/', admin.site.urls),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
