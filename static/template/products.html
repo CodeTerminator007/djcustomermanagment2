@@ -19,7 +19,7 @@
                     <td> {{i.name}}</td>
                     <td> {{i.seller.name}}</td>
                     <td> {{i.price}}</td>
-                    <td><a class="btn btn-danger btn-block" href="{% url 'place_order' request.user.customer.id %}">Buy</a></td>
+                    <td><a class="btn btn-danger btn-block" href="{% url 'place_order' %}">Buy</a></td>
                 </tr>
                 {% endfor %}
                 </tr>
