@@ -14,9 +14,9 @@ def is_user_seller(user):
 
 @login_required(login_url="signin")
 @user_passes_test(is_user_seller , login_url='signin')
-def seller_home(request,pk):
+def seller_home(request):
     try:
-        seller =  Seller.objects.get(id=pk)
+        seller =  Seller.objects.get(user=request.user)
     except User.DoesNotExist:
         raise Http404("Seller Does Not Exisit")
     
@@ -41,8 +41,8 @@ def seller_register(request):
 
 @login_required(login_url="signin")
 @user_passes_test(is_user_seller , login_url='signin')    
-def settings_seller(request ,pk):
-    seller =  Seller.objects.get(id=pk)
+def settings_seller(request ):
+    seller =  Seller.objects.get(user=request.user)
     form =  SellerForm(instance=seller)
     if request.method == 'POST':
         form = SellerForm(request.POST,request.FILES,instance=seller)
@@ -56,8 +56,8 @@ def settings_seller(request ,pk):
 
 @login_required(login_url="signin")
 @user_passes_test(is_user_seller , login_url='signin')
-def place_product(request ,pk):
-    seller =  Seller.objects.get(id=pk)
+def place_product(request ):
+    seller =  Seller.objects.get(user=request.user)
     form = ProductForm(initial={'seller':seller})
     if request.method =="POST":
         form = ProductForm(request.POST)
@@ -70,7 +70,6 @@ def place_product(request ,pk):
 @login_required(login_url="signin")
 @user_passes_test(is_user_seller , login_url='signin')
 def update_product(request ,pk):
-    seller = Seller.objects.get(product__id=pk)
     product = Product.objects.get(id=pk)
     form = ProductForm(instance=product)
     if request.method =="POST":

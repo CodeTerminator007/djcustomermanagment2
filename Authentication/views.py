@@ -15,10 +15,10 @@ def signin(request):
             login(request,user)
             if user.user_type == "CUSTOMER":
                 customer =  Customer.objects.get(user__email=user.email)
-                return redirect('customer-home' , customer.id)
+                return redirect('customer-home' )
             if user.user_type == "SELLER":
                 seller = Seller.objects.get(user__email=user.email) 
-                return redirect ('seller-home', seller.id)              
+                return redirect ('seller-home')              
         else:
             pass
     return render(request , 'signin.html')

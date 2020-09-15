@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   
   {% if request.user.user_type == "CUSTOMER"  %}
-  <a class="navbar-brand text-danger font-weight-bold font-italic" href="{% url 'customer-home' request.user.customer.id %}"> Customer Managment</a>
+  <a class="navbar-brand text-danger font-weight-bold font-italic" href="{% url 'customer-home'  %}"> Customer Managment</a>
   {% endif %}
   
   {% if request.user.user_type == "SELLER"  %}
-  <a class="navbar-brand text-danger font-weight-bold font-italic" href="{% url 'seller-home' request.user.seller.id %}"> Customer Managment</a>
+  <a class="navbar-brand text-danger font-weight-bold font-italic" href="{% url 'seller-home' %}"> Customer Managment</a>
     
   {% endif %}
     

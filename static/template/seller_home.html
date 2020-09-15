@@ -10,8 +10,8 @@
             <img width="150" height="150" class="mx-auto d-block img-thumbnail rounded-circle" src="{{request.user.seller.profile_pic.url}}" alt="">
 
             <hr>
-            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'settings_seller' request.user.seller.id %}">Settings</a>
-            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'place_product' request.user.seller.id %}">Place an Product </a>
+            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'settings_seller'  %}">Settings</a>
+            <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'place_product' %}">Place an Product </a>
         </div>
     </div>
     <div class="col-md">

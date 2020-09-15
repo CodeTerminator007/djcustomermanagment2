@@ -16,9 +16,9 @@ def is_user_customer(user):
             return user
             
 @user_passes_test(is_user_customer , login_url='signin')
-def customer_home(request,pk):
+def customer_home(request):
     try:
-        customer =  Customer.objects.get(id=pk)
+        customer =  Customer.objects.get(user=request.user)
     except User.DoesNotExist:
         raise Http404("User Does Not Exisit")
     orders = customer.order_set.all()
@@ -50,48 +50,47 @@ def customer_products_view(request):
 
 @login_required(login_url="signin")
 @user_passes_test(is_user_customer , login_url='signin')
-def place_order(request ,pk):
-    customer =  Customer.objects.get(id=pk)
+def place_order(request):
+    customer =  Customer.objects.get(user=request.user)
     form = OrderForm(initial={'customer':customer})
     if request.method =="POST":
         form = OrderForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('customer-home' , pk=pk)
+            return redirect('customer-home')
     context = {'form' :  form ,}
     return render(request,'place_order.html' , context)
 
 
+# @login_required(login_url="signin")
+# @user_passes_test(is_user_customer , login_url='signin')
+# def update_order(request ,pk):
+
+#     order = Order.objects.get(id=pk)
+#     form = OrderForm(instance=order)
+#     if request.method =="POST":
+#         form = OrderForm(request.POST , instance=order)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('customer-home' , pk=pk)
+#     context = {'form' :  form ,}
+#     return render(request,'place_order.html' , context)    
+
 @login_required(login_url="signin")
 @user_passes_test(is_user_customer , login_url='signin')
-def update_order(request ,pk):
-
-    order = Order.objects.get(id=pk)
-    form = OrderForm(instance=order)
-    if request.method =="POST":
-        form = OrderForm(request.POST , instance=order)
-        if form.is_valid():
-            form.save()
-            return redirect('customer-home' , pk=pk)
-    context = {'form' :  form ,}
-    return render(request,'place_order.html' , context)    
-
-@login_required(login_url="signin")
-@user_passes_test(is_user_customer , login_url='signin')
-def delete_order(request ,pk):
-    customer =  Customer.objects.get(order__id=pk)
+def delete_order(request,pk):
     item = Order.objects.get(id=pk)
     if request.method == "POST":
         item.delete()
-        return redirect('customer-home' ,customer.id )
+        return redirect('customer-home'  )
     context = {'item':item}
     return render(request,'delete.html' ,context )    
 
 
 @login_required(login_url="signin")
 @user_passes_test(is_user_customer , login_url='signin')
-def settings_user(request ,pk):
-    customer =  Customer.objects.get(id=pk)
+def settings_user(request):
+    customer =  Customer.objects.get(user=request.user)
     form =  CustomerForm(instance=customer)
     if request.method == 'POST':
         form = CustomerForm(request.POST,request.FILES,instance=customer)
