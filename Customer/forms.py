@@ -9,9 +9,9 @@ class CustomerRegistrationForm(forms.Form):
     password1 = forms.CharField(label="Password", required=True)
     password2 = forms.CharField(label="Confirm Password", required=True)
 
-    def clean_password1(self):
+    def clean_password(self):
         data = self.cleaned_data
-        if data['password1'] != data['password2']:
+        if data['password1'] != ['password2']:
             raise forms.ValidationError("Passwords dont match")
         return data
     
